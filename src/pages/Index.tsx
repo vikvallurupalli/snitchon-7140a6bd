@@ -55,7 +55,10 @@ const Index = () => {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all">
+          <div 
+            onClick={() => navigate("/dashboard")}
+            className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all cursor-pointer"
+          >
             <div className="inline-flex items-center justify-center w-14 h-14 bg-secondary/10 rounded-2xl">
               <AlertTriangle className="w-7 h-7 text-accent" />
             </div>
@@ -65,7 +68,10 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all">
+          <div 
+            onClick={() => navigate("/dashboard")}
+            className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all cursor-pointer"
+          >
             <div className="inline-flex items-center justify-center w-14 h-14 bg-secondary/10 rounded-2xl">
               <Search className="w-7 h-7 text-secondary" />
             </div>
@@ -75,7 +81,10 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all">
+          <div 
+            onClick={() => navigate("/how-you-can-help")}
+            className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all cursor-pointer"
+          >
             <div className="inline-flex items-center justify-center w-14 h-14 bg-secondary/10 rounded-2xl">
               <Users className="w-7 h-7 text-primary" />
             </div>
