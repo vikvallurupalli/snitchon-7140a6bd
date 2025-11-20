@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Shield, Search, Users, AlertTriangle } from "lucide-react";
+import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -18,6 +18,44 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
+      {/* Navigation */}
+      <nav className="container mx-auto px-4 py-6">
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/how-you-can-help")}
+            className="flex items-center gap-2"
+          >
+            <Users className="w-4 h-4" />
+            How You Can Help
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/identify-fake-news")}
+            className="flex items-center gap-2"
+          >
+            <AlertTriangle className="w-4 h-4" />
+            Identify Fake News
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/verify-information")}
+            className="flex items-center gap-2"
+          >
+            <CheckCircle className="w-4 h-4" />
+            Verify Information
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/trusted-tools")}
+            className="flex items-center gap-2"
+          >
+            <ExternalLink className="w-4 h-4" />
+            Trusted Tools
+          </Button>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-20 text-center space-y-8">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
