@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, AlertTriangle, Users } from "lucide-react";
+import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink } from "lucide-react";
 import { EntryDialog } from "@/components/EntryDialog";
 import {
   Table,
@@ -59,9 +59,11 @@ const Dashboard = () => {
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-      setUserId(session.user.id);
+    if (!session) {
+      navigate("/auth");
+      return;
     }
+    setUserId(session.user.id);
   };
 
   const fetchEntries = async () => {
@@ -169,10 +171,6 @@ const Dashboard = () => {
   };
 
   const handleAddNew = () => {
-    if (!userId) {
-      navigate("/auth");
-      return;
-    }
     setEditingEntry(null);
     setDialogOpen(true);
   };
@@ -186,91 +184,32 @@ const Dashboard = () => {
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>SnitchOn</h1>
+            <h1 className="text-2xl font-bold">SnitchOn</h1>
           </div>
-          {userId ? (
-            <Button onClick={handleLogout} variant="ghost" size="sm">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          ) : (
-            <Button onClick={() => navigate("/auth")} variant="default" size="sm">
-              Sign In
-            </Button>
-          )}
+          <Button onClick={handleLogout} variant="ghost" size="sm">
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Three Column Layout */}
-        <div className="grid lg:grid-cols-12 gap-6">
-          {/* Left Column - Feature Tiles */}
-          <div className="lg:col-span-3 space-y-4">
-            <div className="space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all cursor-pointer" onClick={handleAddNew}>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl">
-                <AlertTriangle className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold">Report Fake News</h3>
-              <p className="text-sm text-muted-foreground">
-                Contribute to the database by reporting misinformation
-              </p>
-            </div>
-
-            <div className="space-y-4 p-6 rounded-2xl bg-card shadow-card">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl">
-                <Search className="w-6 h-6 text-secondary" />
-              </div>
-              <h3 className="text-lg font-semibold">Search & Verify</h3>
-              <p className="text-sm text-muted-foreground">
-                Quickly search through reported fake news
-              </p>
-            </div>
-
-            <div className="space-y-4 p-6 rounded-2xl bg-card shadow-card cursor-pointer" onClick={() => navigate("/how-you-can-help")}>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl">
-                <Users className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold">Community Driven</h3>
-              <p className="text-sm text-muted-foreground">
-                Join a community fighting misinformation
-              </p>
-            </div>
+      <main className="container mx-auto px-4 py-8 space-y-6">
+        {/* Search and Add Section */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              placeholder="Search by topic, person, or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 h-12"
+            />
           </div>
-
-          {/* Middle Column - Search */}
-          <div className="lg:col-span-6 flex flex-col justify-start pt-8">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-center">Search Fake News Database</h2>
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" />
-                <Input
-                  placeholder="Search by topic, person, or description..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-14 h-14 text-lg"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Get Started */}
-          <div className="lg:col-span-3 flex flex-col justify-start pt-8">
-            <div className="space-y-4 p-6 rounded-2xl bg-gradient-primary text-primary-foreground shadow-elevated">
-              <h3 className="text-xl font-bold">Get Started</h3>
-              <p className="text-sm opacity-90">
-                Ready to report fake news? Join our community in fighting misinformation.
-              </p>
-              <Button 
-                onClick={handleAddNew} 
-                size="lg" 
-                className="w-full bg-background text-foreground hover:bg-background/90"
-              >
-                <Plus className="w-5 h-5 mr-2" />
-                Report Now
-              </Button>
-            </div>
-          </div>
+          <Button onClick={handleAddNew} size="lg" className="h-12 gap-2">
+            <Plus className="w-5 h-5" />
+            Report Fake News
+          </Button>
         </div>
 
         {/* Entries Table */}
