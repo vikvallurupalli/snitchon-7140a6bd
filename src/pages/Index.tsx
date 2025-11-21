@@ -57,7 +57,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-4 py-20 text-center space-y-8">
+      <header className="container mx-auto px-4 pt-20 pb-10 text-center space-y-8">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
           <Shield className="w-10 h-10 text-primary-foreground" />
         </div>
@@ -91,7 +91,7 @@ const Index = () => {
       </header>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 pt-10 pb-20">
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div 
             onClick={() => navigate("/dashboard")}
