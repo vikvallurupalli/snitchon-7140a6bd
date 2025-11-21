@@ -104,7 +104,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/auth");
+    navigate("/dashboard");
   };
 
   const handleSaveEntry = async (entryData: Partial<Entry>) => {
