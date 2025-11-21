@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink } from "lucide-react";
+import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink, Info } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -21,6 +21,14 @@ const Index = () => {
       {/* Navigation */}
       <nav className="container mx-auto px-4 py-6">
         <div className="flex flex-wrap justify-center gap-4">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/about-us")}
+            className="flex items-center gap-2"
+          >
+            <Info className="w-4 h-4" />
+            About Us
+          </Button>
           <Button
             variant="ghost"
             onClick={() => navigate("/how-you-can-help")}
