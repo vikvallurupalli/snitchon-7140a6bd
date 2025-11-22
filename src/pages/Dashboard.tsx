@@ -236,6 +236,7 @@ const Dashboard = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Email</TableHead>
                   <TableHead>Topic/Person</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>URL</TableHead>
@@ -247,6 +248,7 @@ const Dashboard = () => {
               <TableBody>
                 {filteredEntries.map((entry) => (
                   <TableRow key={entry.id}>
+                    <TableCell className="font-medium">{entry.user_email}</TableCell>
                     <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
                     <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
                     <TableCell>
@@ -292,40 +294,6 @@ const Dashboard = () => {
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction onClick={() => handleDelete(entry.id)}>
-                                  Delete
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </div>
-                      )}
-                    </TableCell>
-                      <TableCell className="text-right">
-                      {entry.user_email== email && (
-                        <div className="flex items-center justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEdit(entry)}
-                          >
-                            <Pencil className="w-4 h-4" />
-                          </Button>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="sm">
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Delete Entry</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Are you sure you want to delete this entry? This action cannot be undone.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleDelete(entry.email)}>
                                   Delete
                                 </AlertDialogAction>
                               </AlertDialogFooter>
