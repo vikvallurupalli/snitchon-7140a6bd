@@ -189,11 +189,13 @@ const Dashboard = () => {
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-bold">SnitchOn</h1>
+            <h1>
+              <Button onClick={handleLogout} variant="ghost" size="sm">
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </h1>
           </div>
-          <Button onClick={handleLogout} variant="ghost" size="sm">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
         </div>
       </header>
 
