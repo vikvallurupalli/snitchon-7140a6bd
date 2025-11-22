@@ -107,7 +107,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/auth");
+    navigate("/");
   };
 
   const handleSaveEntry = async (entryData: Partial<Entry>) => {
@@ -192,7 +192,7 @@ const Dashboard = () => {
             <h1>
         <Button 
           variant="ghost" 
-          onClick={() => navigate("/")}
+          onClick={handleLogout}
           className="mb-8">
           ← Back to Home
         </Button>
