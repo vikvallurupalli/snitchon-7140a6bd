@@ -66,15 +66,13 @@ const Auth = () => {
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-bold">SnitchOn</h1>
-            
-          </div>
-
         <Button 
           variant="ghost" 
           onClick={() => navigate("/")}
           className="mb-8">
           ← Back to Home
         </Button>
+          </div>
         </div>
       </header>
 
