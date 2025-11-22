@@ -194,7 +194,7 @@ const Dashboard = () => {
           variant="ghost" 
           onClick={handleLogout}
           className="mb-8">
-          ← Back to Home
+          ← Logout/Back to Home
         </Button>
             </h1>
           </div>
