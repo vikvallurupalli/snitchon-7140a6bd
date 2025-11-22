@@ -190,10 +190,12 @@ const Dashboard = () => {
             </div>
             <h1 className="text-2xl font-bold">SnitchOn</h1>
             <h1>
-              <Button onClick={ navigate("/auth");} variant="ghost" size="sm">
-                <LogOut className="w-4 h-4 mr-2" />
-                Back to Home
-              </Button>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate("/")}
+          className="mb-8">
+          ← Back to Home
+        </Button>
             </h1>
           </div>
         </div>
