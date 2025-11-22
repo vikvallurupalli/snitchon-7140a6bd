@@ -17,6 +17,7 @@ import {
 interface Entry {
   id: string;
   topic_or_person: string;
+  user_email: string;
   short_description: string;
   url: string;
   details: string;
