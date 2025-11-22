@@ -188,7 +188,7 @@ const Dashboard = () => {
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold">SnitchOn</h1>
+            <h1 className="text-2xl font-bold">SnitchOn--back</h1>
             <h1>
               <Button onClick={handleLogout} variant="ghost" size="sm">
                 <LogOut className="w-4 h-4 mr-2" />
