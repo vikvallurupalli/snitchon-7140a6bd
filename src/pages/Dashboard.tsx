@@ -74,7 +74,6 @@ const Dashboard = () => {
       const { data, error } = await supabase
         .from("fake_news_entries")
         .select("*")
-        .filter("user_email", "eq", email)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
