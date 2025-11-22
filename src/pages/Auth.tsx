@@ -69,7 +69,12 @@ const Auth = () => {
             
           </div>
 
-
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate("/")}
+          className="mb-8">
+          ← Back to Home
+        </Button>
         </div>
       </header>
 
