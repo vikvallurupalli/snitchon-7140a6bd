@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Entry {
   id?: string;
@@ -18,6 +19,7 @@ interface Entry {
   short_description: string;
   url: string;
   details: string;
+  user_email: string;
 }
 
 interface EntryDialogProps {
@@ -33,7 +35,18 @@ export const EntryDialog = ({ open, onOpenChange, entry, onSave }: EntryDialogPr
     short_description: "",
     url: "",
     details: "",
+    user_email: "",
   });
+
+  useEffect(() => {
+  if (!open) return;
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    const email = session?.user?.email;
+    if (email) {
+      setFormData(prev => ({ ...prev, user_email: email }));
+    }
+  });
+}, [open]);
 
   useEffect(() => {
     if (entry) {
@@ -42,6 +55,7 @@ export const EntryDialog = ({ open, onOpenChange, entry, onSave }: EntryDialogPr
         short_description: entry.short_description,
         url: entry.url,
         details: entry.details,
+        user_email: entry.user_email,
       });
     } else {
       setFormData({
@@ -49,6 +63,7 @@ export const EntryDialog = ({ open, onOpenChange, entry, onSave }: EntryDialogPr
         short_description: "",
         url: "",
         details: "",
+        user_email:"",
       });
     }
   }, [entry, open]);
@@ -70,6 +85,7 @@ export const EntryDialog = ({ open, onOpenChange, entry, onSave }: EntryDialogPr
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          
           <div className="space-y-2">
             <Label htmlFor="topic_or_person">Topic or Person *</Label>
             <Input
@@ -82,7 +98,7 @@ export const EntryDialog = ({ open, onOpenChange, entry, onSave }: EntryDialogPr
               required
             />
           </div>
-
+<input type="hidden" name="user_email" value={formData.user_email} />
           <div className="space-y-2">
             <Label htmlFor="short_description">Short Description *</Label>
             <Input
