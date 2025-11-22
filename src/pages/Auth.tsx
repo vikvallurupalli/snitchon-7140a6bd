@@ -66,17 +66,17 @@ const Auth = () => {
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-bold">SnitchOn</h1>
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8">
-          ← Back to Home
-        </Button>
           </div>
         </div>
       </header>
 
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-secondary/10 p-4">
+              <Button 
+          variant="ghost" 
+          onClick={() => navigate("/")}
+          className="mb-8">
+          ← Back to Home
+        </Button>
       <Card className="w-full max-w-md shadow-elevated animate-fade-in">
         <Button 
           variant="ghost" 
