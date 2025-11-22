@@ -236,7 +236,6 @@ const Dashboard = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Email</TableHead>
                   <TableHead>Topic/Person</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>URL</TableHead>
@@ -248,7 +247,6 @@ const Dashboard = () => {
               <TableBody>
                 {filteredEntries.map((entry) => (
                   <TableRow key={entry.id}>
-                    <TableCell className="font-medium">{entry.user_email}</TableCell>
                     <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
                     <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
                     <TableCell>
