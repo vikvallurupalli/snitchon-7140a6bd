@@ -29,6 +29,7 @@ import {
 interface Entry {
   id: string;
   user_id: string;
+  user_email: string;
   topic_or_person: string;
   short_description: string;
   url: string;
@@ -45,6 +46,7 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
@@ -64,6 +66,7 @@ const Dashboard = () => {
       return;
     }
     setUserId(session.user.id);
+    setEmail(session.user.email);
   };
 
   const fetchEntries = async () => {
@@ -104,7 +107,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    navigate("/auth");
   };
 
   const handleSaveEntry = async (entryData: Partial<Entry>) => {
@@ -124,6 +127,7 @@ const Dashboard = () => {
           url: entryData.url!,
           details: entryData.details!,
           user_id: userId!,
+          user_email: email!,
         };
         
         const { error } = await supabase
@@ -296,6 +300,41 @@ const Dashboard = () => {
                         </div>
                       )}
                     </TableCell>
+                      <TableCell className="text-right">
+                      {entry.user_email== email && (
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(entry)}
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="sm">
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Delete Entry</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Are you sure you want to delete this entry? This action cannot be undone.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDelete(entry.id)}>
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      )}
+                    </TableCell>
+
                   </TableRow>
                 ))}
               </TableBody>
