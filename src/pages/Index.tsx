@@ -89,52 +89,61 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
       {/* Navigation */}
       <nav className="container mx-auto px-4 py-6">
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap justify-center gap-4 flex-1">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/about-us")}
+              className="flex items-center gap-2"
+            >
+              <Info className="w-4 h-4" />
+              About Us
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/how-you-can-help")}
+              className="flex items-center gap-2"
+            >
+              <Users className="w-4 h-4" />
+              How You Can Help
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/identify-fake-news")}
+              className="flex items-center gap-2"
+            >
+              <AlertTriangle className="w-4 h-4" />
+              Identify Fake News
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/verify-information")}
+              className="flex items-center gap-2"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Verify Information
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/trusted-tools")}
+              className="flex items-center gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Trusted Tools
+            </Button>
+          </div>
           <Button
-            variant="ghost"
-            onClick={() => navigate("/about-us")}
-            className="flex items-center gap-2"
+            size="lg"
+            className="h-12 px-6"
+            onClick={() => navigate("/auth")}
           >
-            <Info className="w-4 h-4" />
-            About Us
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/how-you-can-help")}
-            className="flex items-center gap-2"
-          >
-            <Users className="w-4 h-4" />
-            How You Can Help
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/identify-fake-news")}
-            className="flex items-center gap-2"
-          >
-            <AlertTriangle className="w-4 h-4" />
-            Identify Fake News
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/verify-information")}
-            className="flex items-center gap-2"
-          >
-            <CheckCircle className="w-4 h-4" />
-            Verify Information
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/trusted-tools")}
-            className="flex items-center gap-2"
-          >
-            <ExternalLink className="w-4 h-4" />
-            Trusted Tools
+            Get Started
           </Button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-4 pt-20 pb-10 text-center space-y-8">
+      <header className="container mx-auto px-4 pt-20 pb-6 text-center space-y-8">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
           <Shield className="w-10 h-10 text-primary-foreground" />
         </div>
@@ -165,24 +174,6 @@ const Index = () => {
             </Button>
           </div>
         </form>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-          <Button
-            size="lg"
-            className="h-14 px-8 text-lg"
-            onClick={() => navigate("/auth")}
-          >
-            Get Started
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="h-14 px-8 text-lg"
-            onClick={() => navigate("/auth")}
-          >
-            Sign In
-          </Button>
-        </div>
       </header>
 
       {/* Search Results */}
