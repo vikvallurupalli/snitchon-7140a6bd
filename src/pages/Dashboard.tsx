@@ -29,7 +29,6 @@ import {
 interface Entry {
   id: string;
   user_id: string;
-  user_email: string;
   topic_or_person: string;
   short_description: string;
   url: string;
@@ -46,7 +45,6 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
@@ -66,7 +64,6 @@ const Dashboard = () => {
       return;
     }
     setUserId(session.user.id);
-    setEmail(session.user.email);
   };
 
   const fetchEntries = async () => {
@@ -127,7 +124,6 @@ const Dashboard = () => {
           url: entryData.url!,
           details: entryData.details!,
           user_id: userId!,
-          user_email: email!,
         };
         
         const { error } = await supabase
