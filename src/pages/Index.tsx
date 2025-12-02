@@ -1,20 +1,89 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink, Info } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+interface Entry {
+  id: string;
+  topic_or_person: string;
+  short_description: string;
+  url: string;
+  details: string;
+  created_at: string;
+}
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         navigate("/dashboard");
       }
     });
   }, [navigate]);
+
+  const fetchEntries = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("fake_news_entries")
+        .select("id, topic_or_person, short_description, url, details, created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setEntries(data || []);
+    } catch (error) {
+      console.error("Failed to fetch entries", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!hasSearched) {
+      await fetchEntries();
+      setHasSearched(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!hasSearched) return;
+    
+    if (!searchQuery.trim()) {
+      setFilteredEntries(entries);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const filtered = entries.filter(
+      (entry) =>
+        entry.topic_or_person.toLowerCase().includes(query) ||
+        entry.short_description.toLowerCase().includes(query) ||
+        entry.details.toLowerCase().includes(query)
+    );
+    setFilteredEntries(filtered);
+  }, [searchQuery, entries, hasSearched]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSearch();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
@@ -79,6 +148,24 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Search Bar */}
+        <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto animate-fade-in">
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                placeholder="Search for fake news by topic, person, or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-14 text-lg"
+              />
+            </div>
+            <Button type="submit" size="lg" className="h-14 px-8">
+              Search
+            </Button>
+          </div>
+        </form>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
           <Button
             size="lg"
@@ -98,11 +185,63 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Search Results */}
+      {hasSearched && (
+        <section className="container mx-auto px-4 pb-10">
+          {loading ? (
+            <div className="text-center py-12 text-muted-foreground">Loading entries...</div>
+          ) : filteredEntries.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              {searchQuery ? "No entries found matching your search" : "No entries yet"}
+            </div>
+          ) : (
+            <div className="rounded-lg border bg-card max-w-6xl mx-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Topic/Person</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>URL</TableHead>
+                    <TableHead className="hidden lg:table-cell">Details</TableHead>
+                    <TableHead>Created</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredEntries.map((entry) => (
+                    <TableRow key={entry.id}>
+                      <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
+                      <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
+                      <TableCell>
+                        <a
+                          href={entry.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          Link
+                        </a>
+                      </TableCell>
+                      <TableCell className="hidden lg:table-cell max-w-md truncate">
+                        {entry.details}
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
+                        {new Date(entry.created_at).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </section>
+      )}
+
       {/* Features Section */}
       <section className="container mx-auto px-4 pt-10 pb-20">
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div 
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/auth")}
             className="text-center space-y-4 p-6 rounded-2xl bg-card shadow-card hover:shadow-elevated transition-all cursor-pointer"
           >
             <div className="inline-flex items-center justify-center w-14 h-14 bg-secondary/10 rounded-2xl">

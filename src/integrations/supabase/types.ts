@@ -34,7 +34,6 @@ export type Database = {
           updated_at?: string
           url: string
           user_id: string
-           user_email: string
         }
         Update: {
           created_at?: string
