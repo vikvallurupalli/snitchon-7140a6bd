@@ -45,16 +45,16 @@ const AboutUs = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">How It All Started</h2>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              SnitchOn was born from the observations of Vik, a high school student who witnessed firsthand 
+              Media opulence was the norm for our generation of kids. I have witnessed firsthand 
               the devastating impact of fake news and misinformation on communities, families, and society at large. 
-              In an era where information spreads at lightning speed, Vik noticed how false narratives could 
+              In an era where information spreads at lightning speed, i noticed how false narratives could 
               influence opinions, create division, and even endanger lives.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              What started as concern grew into determination. Vik realized that fighting misinformation 
+              What started as concern grew into determination. I realized that fighting misinformation 
               couldn't be a solo effort—it required a global, community-driven approach. The idea was simple 
               yet powerful: empower everyday people to become fact-checkers, truth-seekers, and defenders of 
-              accurate information.
+              accurate information.<br> Vikram V</br>
             </p>
           </CardContent>
         </Card>
