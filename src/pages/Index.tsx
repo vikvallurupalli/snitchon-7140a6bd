@@ -13,6 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface Entry {
   id: string;
@@ -30,6 +36,7 @@ const Index = () => {
   const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -204,15 +211,13 @@ const Index = () => {
                       <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
                       <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
                       <TableCell>
-                        <a
-                          href={entry.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() => setSelectedUrl(entry.url)}
                           className="inline-flex items-center gap-1 text-primary hover:underline"
                         >
                           <ExternalLink className="w-3 h-3" />
                           Link
-                        </a>
+                        </button>
                       </TableCell>
                       <TableCell>
                         <Link
@@ -234,6 +239,43 @@ const Index = () => {
           )}
         </section>
       )}
+
+      {/* URL Popup Dialog */}
+      <Dialog open={!!selectedUrl} onOpenChange={() => setSelectedUrl(null)}>
+        <DialogContent className="max-w-4xl max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <ExternalLink className="w-4 h-4" />
+              Source URL
+            </DialogTitle>
+          </DialogHeader>
+          {selectedUrl && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                <span className="text-sm break-all flex-1">{selectedUrl}</span>
+                <a
+                  href={selectedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0"
+                >
+                  <Button size="sm" variant="outline">
+                    Open in New Tab
+                  </Button>
+                </a>
+              </div>
+              <div className="border rounded-lg overflow-hidden h-[60vh]">
+                <iframe
+                  src={selectedUrl}
+                  title="Source content"
+                  className="w-full h-full"
+                  sandbox="allow-scripts allow-same-origin"
+                />
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Features Section */}
       <section className="container mx-auto px-4 pt-10 pb-20">
