@@ -54,8 +54,8 @@ const AboutUs = () => {
               What started as concern grew into determination. I realized that fighting misinformation 
               couldn't be a solo effort—it required a global, community-driven approach. The idea was simple 
               yet powerful: empower everyday people to become fact-checkers, truth-seekers, and defenders of 
-              accurate information.<br> Vikram V</br>
-            </p>
+              accurate information.<br> Vikram R V</br>
+            </p> 
           </CardContent>
         </Card>
 
