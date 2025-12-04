@@ -37,6 +37,7 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
+  const [recentEntries, setRecentEntries] = useState<Entry[]>([]);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -44,6 +45,17 @@ const Index = () => {
         navigate("/dashboard");
       }
     });
+    
+    // Fetch 5 most recent entries
+    const fetchRecentEntries = async () => {
+      const { data } = await supabase
+        .from("fake_news_entries")
+        .select("id, topic_or_person, short_description, url, details, created_at")
+        .order("created_at", { ascending: false })
+        .limit(5);
+      if (data) setRecentEntries(data);
+    };
+    fetchRecentEntries();
   }, [navigate]);
 
   const fetchEntries = async () => {
@@ -161,46 +173,76 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-4 pt-20 pb-6 text-center space-y-8">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
-          <Shield className="w-10 h-10 text-primary-foreground" />
-        </div>
-        
-        <div className="space-y-4 animate-slide-up">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            SnitchOn
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Report and search for fake news. Help keep information accurate and trustworthy.
-          </p>
-        </div>
-
-        {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto animate-fade-in">
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                placeholder="Search for fake news by topic, person, or description..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-14 text-lg"
-                minLength={3}
-              />
+      <header className="container mx-auto px-4 pt-20 pb-6">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          {/* Main Hero Content */}
+          <div className="flex-1 text-center lg:text-left space-y-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
+              <Shield className="w-10 h-10 text-primary-foreground" />
             </div>
-            <Button 
-              type="submit" 
-              size="lg" 
-              className="h-14 px-8"
-              disabled={searchQuery.trim().length < 3}
-            >
-              Search
-            </Button>
+            
+            <div className="space-y-4 animate-slide-up">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+                SnitchOn
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+                Report and search for fake news. Help keep information accurate and trustworthy.
+              </p>
+            </div>
+
+            {/* Search Bar */}
+            <form onSubmit={handleSearchSubmit} className="max-w-2xl animate-fade-in">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Input
+                    placeholder="Search for fake news by topic, person, or description..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 h-14 text-lg"
+                    minLength={3}
+                  />
+                </div>
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="h-14 px-8"
+                  disabled={searchQuery.trim().length < 3}
+                >
+                  Search
+                </Button>
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                Enter at least 3 characters to search
+              </p>
+            </form>
           </div>
-          <p className="text-sm text-muted-foreground mt-2">
-            Enter at least 3 characters to search
-          </p>
-        </form>
+
+          {/* Recent Entries Card */}
+          {recentEntries.length > 0 && (
+            <div className="w-full lg:w-80 bg-card border rounded-xl shadow-card p-4 animate-fade-in">
+              <div className="flex items-center gap-2 mb-3">
+                <AlertTriangle className="w-4 h-4 text-accent" />
+                <h3 className="font-semibold text-sm">Recent Reports</h3>
+              </div>
+              <div className="space-y-2">
+                {recentEntries.map((entry) => (
+                  <Link
+                    key={entry.id}
+                    to={`/entry/${entry.id}`}
+                    className="block p-2 rounded-lg hover:bg-muted transition-colors"
+                  >
+                    <p className="text-sm font-medium truncate">{entry.topic_or_person}</p>
+                    <p className="text-xs text-muted-foreground truncate">{entry.short_description}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {new Date(entry.created_at).toLocaleDateString()}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </header>
 
       {/* Search Results */}
