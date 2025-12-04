@@ -64,6 +64,11 @@ const Index = () => {
   };
 
   const handleSearch = async () => {
+    if (searchQuery.trim().length < 3) {
+      setFilteredEntries([]);
+      setHasSearched(false);
+      return;
+    }
     if (!hasSearched) {
       await fetchEntries();
       setHasSearched(true);
@@ -71,12 +76,14 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (!hasSearched) return;
-    
-    if (!searchQuery.trim()) {
-      setFilteredEntries(entries);
+    // Clear results if search query is less than 3 characters
+    if (searchQuery.trim().length < 3) {
+      setFilteredEntries([]);
+      setHasSearched(false);
       return;
     }
+
+    if (!hasSearched) return;
 
     const query = searchQuery.toLowerCase();
     const filtered = entries.filter(
@@ -90,6 +97,9 @@ const Index = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (searchQuery.trim().length < 3) {
+      return;
+    }
     handleSearch();
   };
 
@@ -175,12 +185,21 @@ const Index = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 h-14 text-lg"
+                minLength={3}
               />
             </div>
-            <Button type="submit" size="lg" className="h-14 px-8">
+            <Button 
+              type="submit" 
+              size="lg" 
+              className="h-14 px-8"
+              disabled={searchQuery.trim().length < 3}
+            >
               Search
             </Button>
           </div>
+          <p className="text-sm text-muted-foreground mt-2">
+            Enter at least 3 characters to search
+          </p>
         </form>
       </header>
 
