@@ -272,24 +272,29 @@ const Index = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
                 <span className="text-sm break-all flex-1">{selectedUrl}</span>
-                <a
-                  href={selectedUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="shrink-0"
-                >
-                  <Button size="sm" variant="outline">
-                    Open in New Tab
-                  </Button>
-                </a>
               </div>
-              <div className="border rounded-lg overflow-hidden h-[60vh]">
+              <div className="border rounded-lg overflow-hidden h-[60vh] relative">
                 <iframe
                   src={selectedUrl}
                   title="Source content"
                   className="w-full h-full"
                   sandbox="allow-scripts allow-same-origin"
                 />
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/90 opacity-0 hover:opacity-100 transition-opacity">
+                  <p className="text-sm text-muted-foreground mb-4 text-center px-4">
+                    Some websites block preview embedding for security reasons.
+                  </p>
+                  <a
+                    href={selectedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button>
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Open in New Tab
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           )}
