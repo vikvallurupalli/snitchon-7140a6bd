@@ -12,6 +12,7 @@ import TrustedTools from "./pages/TrustedTools";
 import VerifyInformation from "./pages/VerifyInformation";
 import IdentifyFakeNews from "./pages/IdentifyFakeNews";
 import AboutUs from "./pages/AboutUs";
+import EntryDetails from "./pages/EntryDetails";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/verify-information" element={<VerifyInformation />} />
           <Route path="/identify-fake-news" element={<IdentifyFakeNews />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/entry/:id" element={<EntryDetails />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

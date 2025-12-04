@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink, Info } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink, Info, Eye } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -193,7 +194,7 @@ const Index = () => {
                     <TableHead>Topic/Person</TableHead>
                     <TableHead>Description</TableHead>
                     <TableHead>URL</TableHead>
-                    <TableHead className="hidden lg:table-cell">Details</TableHead>
+                    <TableHead>Details</TableHead>
                     <TableHead>Created</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -213,8 +214,14 @@ const Index = () => {
                           Link
                         </a>
                       </TableCell>
-                      <TableCell className="hidden lg:table-cell max-w-md truncate">
-                        {entry.details}
+                      <TableCell>
+                        <Link
+                          to={`/entry/${entry.id}`}
+                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                        >
+                          <Eye className="w-3 h-3" />
+                          View
+                        </Link>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                         {new Date(entry.created_at).toLocaleDateString()}
