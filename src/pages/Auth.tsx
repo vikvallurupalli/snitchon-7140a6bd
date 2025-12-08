@@ -5,24 +5,42 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Shield } from "lucide-react";
+import { AliasDialog } from "@/components/AliasDialog";
 
 const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [showAliasDialog, setShowAliasDialog] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  const checkProfileAndRedirect = async (userId: string) => {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("alias")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (!profile || !profile.alias) {
+      setCurrentUserId(userId);
+      setShowAliasDialog(true);
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   useEffect(() => {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
-        navigate("/dashboard");
+        checkProfileAndRedirect(session.user.id);
       }
     });
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate("/dashboard");
+        checkProfileAndRedirect(session.user.id);
       }
     });
 
@@ -107,6 +125,15 @@ const Auth = () => {
           </p>
         </CardContent>
       </Card>
+
+      {currentUserId && (
+        <AliasDialog
+          open={showAliasDialog}
+          onOpenChange={setShowAliasDialog}
+          userId={currentUserId}
+          onSuccess={() => navigate("/dashboard")}
+        />
+      )}
     </div>
     </div>
   );

@@ -19,6 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Leaderboard } from "@/components/Leaderboard";
 
 interface Entry {
   id: string;
@@ -218,30 +219,36 @@ const Index = () => {
             </form>
           </div>
 
-          {/* Recent Entries Card */}
-          {recentEntries.length > 0 && (
-            <div className="w-full lg:w-80 bg-card border rounded-xl shadow-card p-4 animate-fade-in">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-4 h-4 text-accent" />
-                <h3 className="font-semibold text-sm">Recent Reports</h3>
+          {/* Right side cards */}
+          <div className="flex flex-col gap-4 w-full lg:w-80">
+            {/* Leaderboard */}
+            <Leaderboard />
+
+            {/* Recent Entries Card */}
+            {recentEntries.length > 0 && (
+              <div className="bg-card border rounded-xl shadow-card p-4 animate-fade-in">
+                <div className="flex items-center gap-2 mb-3">
+                  <AlertTriangle className="w-4 h-4 text-accent" />
+                  <h3 className="font-semibold text-sm">Recent Reports</h3>
+                </div>
+                <div className="space-y-2">
+                  {recentEntries.map((entry) => (
+                    <Link
+                      key={entry.id}
+                      to={`/entry/${entry.id}`}
+                      className="block p-2 rounded-lg hover:bg-muted transition-colors"
+                    >
+                      <p className="text-sm font-medium truncate">{entry.topic_or_person}</p>
+                      <p className="text-xs text-muted-foreground truncate">{entry.short_description}</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {new Date(entry.created_at).toLocaleDateString()}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-2">
-                {recentEntries.map((entry) => (
-                  <Link
-                    key={entry.id}
-                    to={`/entry/${entry.id}`}
-                    className="block p-2 rounded-lg hover:bg-muted transition-colors"
-                  >
-                    <p className="text-sm font-medium truncate">{entry.topic_or_person}</p>
-                    <p className="text-xs text-muted-foreground truncate">{entry.short_description}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {new Date(entry.created_at).toLocaleDateString()}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </header>
 

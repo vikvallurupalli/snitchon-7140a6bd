@@ -47,12 +47,42 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          alias: string | null
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alias?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alias?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_top_contributors: {
+        Args: { limit_count?: number }
+        Returns: {
+          alias: string
+          entry_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

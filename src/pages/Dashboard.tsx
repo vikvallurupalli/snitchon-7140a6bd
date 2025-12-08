@@ -4,8 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink } from "lucide-react";
+import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, User } from "lucide-react";
 import { EntryDialog } from "@/components/EntryDialog";
+import { AliasDialog } from "@/components/AliasDialog";
 import {
   Table,
   TableBody,
@@ -45,7 +46,9 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [userAlias, setUserAlias] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [aliasDialogOpen, setAliasDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
   useEffect(() => {
@@ -64,6 +67,17 @@ const Dashboard = () => {
       return;
     }
     setUserId(session.user.id);
+    
+    // Fetch user alias
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("alias")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+    
+    if (profile?.alias) {
+      setUserAlias(profile.alias);
+    }
   };
 
   const fetchEntries = async () => {
@@ -175,6 +189,20 @@ const Dashboard = () => {
     setDialogOpen(true);
   };
 
+  const handleAliasUpdated = async () => {
+    if (userId) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("alias")
+        .eq("user_id", userId)
+        .maybeSingle();
+      
+      if (profile?.alias) {
+        setUserAlias(profile.alias);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/5">
       {/* Header */}
@@ -185,14 +213,25 @@ const Dashboard = () => {
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-bold">SnitchOn</h1>
-            <h1>
-        <Button 
-          variant="ghost" 
-          onClick={handleLogout}
-          className="mb-8">
-          ← Logout/Back to Home
-        </Button>
-            </h1>
+            <Button 
+              variant="ghost" 
+              onClick={handleLogout}
+            >
+              ← Logout/Back to Home
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            {userAlias && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setAliasDialogOpen(true)}
+                className="gap-2"
+              >
+                <User className="w-4 h-4" />
+                {userAlias}
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -316,6 +355,17 @@ const Dashboard = () => {
         entry={editingEntry}
         onSave={handleSaveEntry}
       />
+
+      {/* Alias Dialog */}
+      {userId && (
+        <AliasDialog
+          open={aliasDialogOpen}
+          onOpenChange={setAliasDialogOpen}
+          userId={userId}
+          currentAlias={userAlias}
+          onSuccess={handleAliasUpdated}
+        />
+      )}
     </div>
   );
 };
