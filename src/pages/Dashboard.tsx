@@ -49,6 +49,7 @@ const Dashboard = () => {
   const [userAlias, setUserAlias] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [aliasDialogOpen, setAliasDialogOpen] = useState(false);
+  const [aliasRequired, setAliasRequired] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
   useEffect(() => {
@@ -77,6 +78,10 @@ const Dashboard = () => {
     
     if (profile?.alias) {
       setUserAlias(profile.alias);
+    } else {
+      // No alias set, show dialog (mandatory for first login)
+      setAliasRequired(true);
+      setAliasDialogOpen(true);
     }
   };
 
@@ -360,10 +365,19 @@ const Dashboard = () => {
       {userId && (
         <AliasDialog
           open={aliasDialogOpen}
-          onOpenChange={setAliasDialogOpen}
+          onOpenChange={(open) => {
+            // Prevent closing if alias is required and not set
+            if (!open && aliasRequired && !userAlias) {
+              return;
+            }
+            setAliasDialogOpen(open);
+          }}
           userId={userId}
           currentAlias={userAlias}
-          onSuccess={handleAliasUpdated}
+          onSuccess={() => {
+            handleAliasUpdated();
+            setAliasRequired(false);
+          }}
         />
       )}
     </div>
