@@ -18,6 +18,7 @@ interface AliasDialogProps {
   userId: string;
   currentAlias?: string | null;
   onSuccess: () => void;
+  required?: boolean;
 }
 
 export const AliasDialog = ({
