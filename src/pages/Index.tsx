@@ -219,11 +219,16 @@ const Index = () => {
             </form>
           </div>
 
-          {/* Recent Reports & Leaderboard - Right Side */}
-          <div className="w-full lg:w-auto lg:min-w-[320px] flex flex-col gap-4 animate-fade-in">
+          {/* Top Contributors & Recent Reports - Right Side */}
+          <div className="w-full lg:w-auto flex flex-row gap-4 animate-fade-in">
+            {/* Top Contributors Card */}
+            <div className="w-64">
+              <Leaderboard />
+            </div>
+
             {/* Recent Reports Card */}
             {recentEntries.length > 0 && (
-              <div className="bg-card border rounded-xl shadow-card p-4">
+              <div className="w-64 bg-card border rounded-xl shadow-card p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <AlertTriangle className="w-4 h-4 text-accent" />
                   <h3 className="font-semibold text-sm">Recent Reports</h3>
@@ -242,9 +247,6 @@ const Index = () => {
                 </div>
               </div>
             )}
-
-            {/* Top Contributors Card */}
-            <Leaderboard />
           </div>
         </div>
       </header>
