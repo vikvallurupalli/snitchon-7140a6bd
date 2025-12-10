@@ -174,7 +174,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-4 pt-20 pb-6">
+      <header className="container mx-auto px-4 pt-12 pb-6">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Main Hero Content */}
           <div className="flex-1 text-center lg:text-left space-y-8">
@@ -219,41 +219,35 @@ const Index = () => {
             </form>
           </div>
 
+          {/* Recent Reports & Leaderboard - Right Side */}
+          <div className="w-full lg:w-auto lg:min-w-[320px] flex flex-col gap-4 animate-fade-in">
+            {/* Recent Reports Card */}
+            {recentEntries.length > 0 && (
+              <div className="bg-card border rounded-xl shadow-card p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <AlertTriangle className="w-4 h-4 text-accent" />
+                  <h3 className="font-semibold text-sm">Recent Reports</h3>
+                </div>
+                <div className="space-y-2">
+                  {recentEntries.map((entry) => (
+                    <Link
+                      key={entry.id}
+                      to={`/entry/${entry.id}`}
+                      className="block p-2 rounded-lg hover:bg-muted transition-colors border border-transparent hover:border-border"
+                    >
+                      <p className="font-medium text-sm truncate">{entry.topic_or_person}</p>
+                      <p className="text-xs text-muted-foreground truncate mt-0.5">{entry.short_description}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Top Contributors Card */}
+            <Leaderboard />
+          </div>
         </div>
       </header>
-
-      {/* Recent Reports & Leaderboard Section */}
-      <section className="container mx-auto px-4 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {/* Recent Reports Card */}
-          {recentEntries.length > 0 && (
-            <div className="bg-card border rounded-xl shadow-card p-5 animate-fade-in">
-              <div className="flex items-center gap-2 mb-4">
-                <AlertTriangle className="w-5 h-5 text-accent" />
-                <h3 className="font-semibold">Recent Reports</h3>
-              </div>
-              <div className="space-y-3">
-                {recentEntries.map((entry) => (
-                  <Link
-                    key={entry.id}
-                    to={`/entry/${entry.id}`}
-                    className="block p-3 rounded-lg hover:bg-muted transition-colors border border-transparent hover:border-border"
-                  >
-                    <p className="font-medium truncate">{entry.topic_or_person}</p>
-                    <p className="text-sm text-muted-foreground truncate mt-1">{entry.short_description}</p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      {new Date(entry.created_at).toLocaleDateString()}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Top Contributors Card */}
-          <Leaderboard />
-        </div>
-      </section>
 
       {/* Search Results */}
       {hasSearched && (
