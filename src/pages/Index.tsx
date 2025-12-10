@@ -219,38 +219,41 @@ const Index = () => {
             </form>
           </div>
 
-          {/* Right side cards */}
-          <div className="flex flex-col gap-4 w-full lg:w-80">
-            {/* Leaderboard */}
-            <Leaderboard />
-
-            {/* Recent Entries Card */}
-            {recentEntries.length > 0 && (
-              <div className="bg-card border rounded-xl shadow-card p-4 animate-fade-in">
-                <div className="flex items-center gap-2 mb-3">
-                  <AlertTriangle className="w-4 h-4 text-accent" />
-                  <h3 className="font-semibold text-sm">Recent Reports</h3>
-                </div>
-                <div className="space-y-2">
-                  {recentEntries.map((entry) => (
-                    <Link
-                      key={entry.id}
-                      to={`/entry/${entry.id}`}
-                      className="block p-2 rounded-lg hover:bg-muted transition-colors"
-                    >
-                      <p className="text-sm font-medium truncate">{entry.topic_or_person}</p>
-                      <p className="text-xs text-muted-foreground truncate">{entry.short_description}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {new Date(entry.created_at).toLocaleDateString()}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       </header>
+
+      {/* Recent Reports & Leaderboard Section */}
+      <section className="container mx-auto px-4 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Recent Reports Card */}
+          {recentEntries.length > 0 && (
+            <div className="bg-card border rounded-xl shadow-card p-5 animate-fade-in">
+              <div className="flex items-center gap-2 mb-4">
+                <AlertTriangle className="w-5 h-5 text-accent" />
+                <h3 className="font-semibold">Recent Reports</h3>
+              </div>
+              <div className="space-y-3">
+                {recentEntries.map((entry) => (
+                  <Link
+                    key={entry.id}
+                    to={`/entry/${entry.id}`}
+                    className="block p-3 rounded-lg hover:bg-muted transition-colors border border-transparent hover:border-border"
+                  >
+                    <p className="font-medium truncate">{entry.topic_or_person}</p>
+                    <p className="text-sm text-muted-foreground truncate mt-1">{entry.short_description}</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {new Date(entry.created_at).toLocaleDateString()}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top Contributors Card */}
+          <Leaderboard />
+        </div>
+      </section>
 
       {/* Search Results */}
       {hasSearched && (
