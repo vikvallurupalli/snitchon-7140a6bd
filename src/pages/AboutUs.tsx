@@ -1,24 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lightbulb, Users, Globe, Target, Heart, Shield } from "lucide-react";
+import { Lightbulb, Users, Globe, Target, Heart, Shield } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 const AboutUs = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      {/* Back Button */}
-      <nav className="container mx-auto px-4 py-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Home
-        </Button>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <header className="container mx-auto px-4 pt-12 pb-16 text-center space-y-6">

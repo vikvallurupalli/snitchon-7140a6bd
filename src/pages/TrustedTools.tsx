@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLink } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "@/components/Navbar";
 
 const TrustedTools = () => {
   const navigate = useNavigate();
@@ -85,15 +86,8 @@ const TrustedTools = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8"
-        >
-          ← Back to Home
-        </Button>
-
         <h1 className="text-4xl font-bold mb-4 text-foreground">Trusted Fact-Checking Tools & Websites</h1>
         <p className="text-xl text-muted-foreground mb-12">
           Reliable resources to help you verify information and identify misinformation.
