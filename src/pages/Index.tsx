@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { Shield, Search, Users, AlertTriangle, BookOpen, CheckCircle, ExternalLink, Info, Eye } from "lucide-react";
+import { Shield, Search, Users, AlertTriangle, ExternalLink } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -29,6 +29,7 @@ interface Entry {
   url: string;
   details: string;
   created_at: string;
+  updated_at: string;
 }
 
 const Index = () => {
@@ -52,7 +53,7 @@ const Index = () => {
     const fetchRecentEntries = async () => {
       const { data } = await supabase
         .from("fake_news_entries")
-        .select("id, topic_or_person, short_description, url, details, created_at")
+        .select("id, topic_or_person, short_description, url, details, created_at, updated_at")
         .order("created_at", { ascending: false })
         .limit(5);
       if (data) setRecentEntries(data);
@@ -65,7 +66,7 @@ const Index = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("fake_news_entries")
-        .select("id, topic_or_person, short_description, url, details, created_at")
+        .select("id, topic_or_person, short_description, url, details, created_at, updated_at")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -223,38 +224,23 @@ const Index = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Topic/Person</TableHead>
                     <TableHead>Description</TableHead>
-                    <TableHead>URL</TableHead>
-                    <TableHead>Details</TableHead>
-                    <TableHead>Created</TableHead>
+                    <TableHead>Verified On</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredEntries.map((entry) => (
                     <TableRow key={entry.id}>
-                      <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
-                      <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
-                      <TableCell>
-                        <button
-                          onClick={() => setSelectedUrl(entry.url)}
-                          className="inline-flex items-center gap-1 text-primary hover:underline"
-                        >
-                          <ExternalLink className="w-3 h-3" />
-                          Link
-                        </button>
-                      </TableCell>
                       <TableCell>
                         <Link
                           to={`/entry/${entry.id}`}
-                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                          className="hover:text-primary hover:underline"
                         >
-                          <Eye className="w-3 h-3" />
-                          View
+                          {entry.short_description}
                         </Link>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
-                        {new Date(entry.created_at).toLocaleDateString()}
+                        {new Date(entry.updated_at).toLocaleDateString()}
                       </TableCell>
                     </TableRow>
                   ))}
