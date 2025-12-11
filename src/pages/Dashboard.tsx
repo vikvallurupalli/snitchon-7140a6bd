@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, User } from "lucide-react";
+import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, User, Home } from "lucide-react";
+import Navbar from "@/components/Navbar";
 import { EntryDialog } from "@/components/EntryDialog";
 import { AliasDialog } from "@/components/AliasDialog";
 import {
@@ -210,6 +211,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/5">
+      {/* Navigation */}
+      <Navbar showHomeButton />
+
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -217,13 +221,7 @@ const Dashboard = () => {
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
               <Shield className="w-5 h-5 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold">SnitchOn</h1>
-            <Button 
-              variant="ghost" 
-              onClick={handleLogout}
-            >
-              ← Logout/Back to Home
-            </Button>
+            <h1 className="text-2xl font-bold">SnitchOn Dashboard</h1>
           </div>
           <div className="flex items-center gap-2">
             {userAlias && (
@@ -237,6 +235,13 @@ const Dashboard = () => {
                 {userAlias}
               </Button>
             )}
+            <Button 
+              variant="ghost" 
+              onClick={handleLogout}
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
           </div>
         </div>
       </header>

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Clock, Link as LinkIcon, User, FileText } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Link as LinkIcon, FileText } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 interface Entry {
   id: string;
@@ -76,18 +77,24 @@ const EntryDetails = () => {
 
   if (error || !entry) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10 flex flex-col items-center justify-center gap-4">
-        <p className="text-destructive">{error || "Entry not found"}</p>
-        <Button onClick={() => navigate("/")} variant="outline">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Button>
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
+        <Navbar showHomeButton />
+        <div className="flex flex-col items-center justify-center gap-4 pt-20">
+          <p className="text-destructive">{error || "Entry not found"}</p>
+          <Button onClick={() => navigate("/")} variant="outline">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Home
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
+      {/* Navigation */}
+      <Navbar showHomeButton />
+
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Back Button */}
         <Button
