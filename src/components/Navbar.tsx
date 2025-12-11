@@ -1,13 +1,31 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Info, Users, AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
+import { Info, Users, AlertTriangle, CheckCircle, ExternalLink, Home } from "lucide-react";
 
-const Navbar = () => {
+interface NavbarProps {
+  showHomeButton?: boolean;
+}
+
+const Navbar = ({ showHomeButton = false }: NavbarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   return (
     <nav className="container mx-auto px-4 py-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
+        {/* Home Button - shown on all pages except homepage */}
+        {(showHomeButton || !isHomePage) && (
+          <Button
+            size="lg"
+            className="h-12 px-6"
+            onClick={() => navigate("/")}
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+        )}
+        
         <div className="flex flex-wrap justify-center gap-4 flex-1">
           <Button
             variant="ghost"
@@ -50,13 +68,17 @@ const Navbar = () => {
             Trusted Tools
           </Button>
         </div>
-        <Button
-          size="lg"
-          className="h-12 px-6"
-          onClick={() => navigate("/auth")}
-        >
-          Get Started
-        </Button>
+
+        {/* Get Started button only on homepage */}
+        {isHomePage && (
+          <Button
+            size="lg"
+            className="h-12 px-6"
+            onClick={() => navigate("/auth")}
+          >
+            Get Started
+          </Button>
+        )}
       </div>
     </nav>
   );

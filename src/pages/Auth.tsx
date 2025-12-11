@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { Shield } from "lucide-react";
 import { AliasDialog } from "@/components/AliasDialog";
+import Navbar from "@/components/Navbar";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -76,65 +77,45 @@ const Auth = () => {
   };
 
   return (
-       <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/5">
-     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary-foreground" />
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/5">
+      {/* Navigation */}
+      <Navbar showHomeButton />
+
+      <div className="flex items-center justify-center p-4 pt-20">
+        <Card className="w-full max-w-md shadow-elevated animate-fade-in">
+          <CardHeader className="space-y-3 text-center">
+            <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mb-2">
+              <Shield className="w-8 h-8 text-primary-foreground" />
             </div>
-            <h1 className="text-2xl font-bold">SnitchOn</h1>
-          </div>
-        </div>
-      </header>
+            <CardTitle className="text-3xl font-bold">Welcome to SnitchOn</CardTitle>
+            <CardDescription className="text-base">
+              Report and search for fake news. Help keep information accurate and trustworthy.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="w-full h-12 text-base font-medium"
+              size="lg"
+            >
+              {loading ? "Connecting..." : "Continue with Google"}
+            </Button>
+            <p className="text-xs text-muted-foreground text-center">
+              By continuing, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </CardContent>
+        </Card>
 
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-secondary/10 p-4">
-              <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8">
-          ← Back to Home
-        </Button>
-      <Card className="w-full max-w-md shadow-elevated animate-fade-in">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8">
-          ← Back to Home
-        </Button>
-        <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mb-2">
-            <Shield className="w-8 h-8 text-primary-foreground" />
-          </div>
-          <CardTitle className="text-3xl font-bold">Welcome to SnitchOn</CardTitle>
-          <CardDescription className="text-base">
-            Report and search for fake news. Help keep information accurate and trustworthy.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Button
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full h-12 text-base font-medium"
-            size="lg"
-          >
-            {loading ? "Connecting..." : "Continue with Google"}
-          </Button>
-          <p className="text-xs text-muted-foreground text-center">
-            By continuing, you agree to our Terms of Service and Privacy Policy
-          </p>
-        </CardContent>
-      </Card>
-
-      {currentUserId && (
-        <AliasDialog
-          open={showAliasDialog}
-          onOpenChange={setShowAliasDialog}
-          userId={currentUserId}
-          onSuccess={() => navigate("/dashboard")}
-        />
-      )}
-    </div>
+        {currentUserId && (
+          <AliasDialog
+            open={showAliasDialog}
+            onOpenChange={setShowAliasDialog}
+            userId={currentUserId}
+            onSuccess={() => navigate("/dashboard")}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -135,9 +135,18 @@ const Index = () => {
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
                 SnitchOn
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
-                Report and search for fake news. Help keep information accurate and trustworthy.
-              </p>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+                  Report and search for fake news. Help keep information accurate and trustworthy.
+                </p>
+                <Button
+                  size="lg"
+                  className="h-12 px-6 whitespace-nowrap"
+                  onClick={() => navigate("/auth")}
+                >
+                  Get Started
+                </Button>
+              </div>
             </div>
 
             {/* Search Bar */}
