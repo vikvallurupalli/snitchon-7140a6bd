@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Leaderboard } from "@/components/Leaderboard";
+import Navbar from "@/components/Navbar";
 
 interface Entry {
   id: string;
@@ -119,59 +120,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-secondary/10">
       {/* Navigation */}
-      <nav className="container mx-auto px-4 py-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap justify-center gap-4 flex-1">
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/about-us")}
-              className="flex items-center gap-2"
-            >
-              <Info className="w-4 h-4" />
-              About Us
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/how-you-can-help")}
-              className="flex items-center gap-2"
-            >
-              <Users className="w-4 h-4" />
-              How You Can Help
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/identify-fake-news")}
-              className="flex items-center gap-2"
-            >
-              <AlertTriangle className="w-4 h-4" />
-              Identify Fake News
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/verify-information")}
-              className="flex items-center gap-2"
-            >
-              <CheckCircle className="w-4 h-4" />
-              Verify Information
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/trusted-tools")}
-              className="flex items-center gap-2"
-            >
-              <ExternalLink className="w-4 h-4" />
-              Trusted Tools
-            </Button>
-          </div>
-          <Button
-            size="lg"
-            className="h-12 px-6"
-            onClick={() => navigate("/auth")}
-          >
-            Get Started
-          </Button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <header className="container mx-auto px-4 pt-12 pb-6">

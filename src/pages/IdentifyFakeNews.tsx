@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, Eye, Globe, MessageSquare, Newspaper, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "@/components/Navbar";
 
 const IdentifyFakeNews = () => {
   const navigate = useNavigate();
@@ -121,15 +122,8 @@ const IdentifyFakeNews = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8"
-        >
-          ← Back to Home
-        </Button>
-
         <h1 className="text-4xl font-bold mb-4 text-foreground">Tips for Identifying Fake News</h1>
         <p className="text-xl text-muted-foreground mb-12">
           Learn to spot misinformation and develop critical thinking skills.

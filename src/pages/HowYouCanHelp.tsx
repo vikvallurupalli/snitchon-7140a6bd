@@ -6,6 +6,7 @@ import reportMisinformationImg from "@/assets/report-misinformation.png";
 import volunteerCommunityImg from "@/assets/volunteer-community.png";
 import spreadAwarenessImg from "@/assets/spread-awareness.png";
 import stayConnectedImg from "@/assets/stay-connected.png";
+import Navbar from "@/components/Navbar";
 
 const HowYouCanHelp = () => {
   const navigate = useNavigate();
@@ -25,15 +26,8 @@ const HowYouCanHelp = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate("/")}
-          className="mb-8"
-        >
-          ← Back to Home
-        </Button>
-
         <h1 className="text-4xl font-bold mb-4 text-foreground">How You Can Help</h1>
         <p className="text-xl text-muted-foreground mb-12">
           Every contribution matters in the fight against misinformation. Here's how you can make a difference.
