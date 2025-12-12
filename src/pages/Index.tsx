@@ -145,7 +145,7 @@ const Index = () => {
                   className="h-12 px-6 whitespace-nowrap"
                   onClick={() => navigate("/auth")}
                 >
-                  Get Started
+                  Start Reporting
                 </Button>
               </div>
             </div>
