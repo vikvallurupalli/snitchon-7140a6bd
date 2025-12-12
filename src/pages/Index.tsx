@@ -224,7 +224,10 @@ const Index = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Description</TableHead>
+                    <TableHead>
+                      <div>Description</div>
+                      <div className="text-xs font-normal text-muted-foreground">Click to view details</div>
+                    </TableHead>
                     <TableHead>Verified On</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -234,7 +237,7 @@ const Index = () => {
                       <TableCell>
                         <button
                           onClick={() => setSelectedEntry(entry)}
-                          className="font-bold underline text-left hover:text-primary transition-colors cursor-pointer"
+                          className="font-bold underline text-left text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors cursor-pointer"
                         >
                           {entry.short_description}
                         </button>
