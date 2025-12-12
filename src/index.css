@@ -59,7 +59,29 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+placeholder { /* Standard syntax */
+  color: blue;
+  opacity: 1; /* Corrects Firefox's default lower opacity */
+}
 
+::-webkit-input-placeholder { /* Chrome, Opera, Safari */
+  color: blue;
+}
+
+:-moz-placeholder { /* Firefox 4 to 18 */
+  color: blue;
+  opacity: 1;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: blue;
+  opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: blue;
+}
+  
   .dark {
     --background: 215 30% 8%;
     --foreground: 210 30% 96%;
