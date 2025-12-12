@@ -136,18 +136,9 @@ const Index = () => {
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
                 SnitchOn
               </h1>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
-                  Report and search for fake news. Help keep information accurate and trustworthy.
-                </p>
-                <Button
-                  size="lg"
-                  className="h-12 px-6 whitespace-nowrap"
-                  onClick={() => navigate("/auth")}
-                >
-                  Start Reporting
-                </Button>
-              </div>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+                Report and search for fake news. Help keep information accurate and trustworthy.
+              </p>
             </div>
 
             {/* Search Bar */}
@@ -167,9 +158,15 @@ const Index = () => {
                   type="submit" 
                   size="lg" 
                   className="h-14 px-8"
-                  disabled={searchQuery.trim().length < 3}
                 >
                   Search
+                </Button>
+                <Button
+                  size="lg"
+                  className="h-14 px-8"
+                  onClick={() => navigate("/auth")}
+                >
+                  Start Reporting
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-2">
