@@ -76,7 +76,7 @@ const Navbar = ({ showHomeButton = false }: NavbarProps) => {
             className="h-12 px-6"
             onClick={() => navigate("/auth")}
           >
-            Get Started
+            Start Reporting
           </Button>
         )}
       </div>
