@@ -39,8 +39,8 @@ const Index = () => {
   const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
   const [recentEntries, setRecentEntries] = useState<Entry[]>([]);
+  const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -229,15 +229,15 @@ const Index = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredEntries.map((entry) => (
+                {filteredEntries.map((entry) => (
                     <TableRow key={entry.id}>
                       <TableCell>
-                        <Link
-                          to={`/entry/${entry.id}`}
-                          className="hover:text-primary hover:underline"
+                        <button
+                          onClick={() => setSelectedEntry(entry)}
+                          className="font-bold underline text-left hover:text-primary transition-colors cursor-pointer"
                         >
                           {entry.short_description}
-                        </Link>
+                        </button>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                         {new Date(entry.updated_at).toLocaleDateString()}
@@ -251,42 +251,38 @@ const Index = () => {
         </section>
       )}
 
-      {/* URL Popup Dialog */}
-      <Dialog open={!!selectedUrl} onOpenChange={() => setSelectedUrl(null)}>
-        <DialogContent className="max-w-4xl max-h-[80vh]">
+      {/* Entry Details Popup Dialog */}
+      <Dialog open={!!selectedEntry} onOpenChange={() => setSelectedEntry(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <ExternalLink className="w-4 h-4" />
-              Source URL
+            <DialogTitle className="text-xl">
+              {selectedEntry?.topic_or_person}
             </DialogTitle>
           </DialogHeader>
-          {selectedUrl && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                <span className="text-sm break-all flex-1">{selectedUrl}</span>
+          {selectedEntry && (
+            <div className="space-y-4 mt-2">
+              <div>
+                <h4 className="font-semibold text-sm text-muted-foreground mb-1">Description</h4>
+                <p>{selectedEntry.short_description}</p>
               </div>
-              <div className="border rounded-lg overflow-hidden h-[60vh] relative">
-                <iframe
-                  src={selectedUrl}
-                  title="Source content"
-                  className="w-full h-full"
-                  sandbox="allow-scripts allow-same-origin"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/90 opacity-0 hover:opacity-100 transition-opacity">
-                  <p className="text-sm text-muted-foreground mb-4 text-center px-4">
-                    Some websites block preview embedding for security reasons.
-                  </p>
-                  <a
-                    href={selectedUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button>
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Open in New Tab
-                    </Button>
-                  </a>
-                </div>
+              <div>
+                <h4 className="font-semibold text-sm text-muted-foreground mb-1">Details</h4>
+                <p className="whitespace-pre-wrap">{selectedEntry.details}</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm text-muted-foreground mb-1">Source URL</h4>
+                <a
+                  href={selectedEntry.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline break-all flex items-center gap-1"
+                >
+                  {selectedEntry.url}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+              <div className="text-sm text-muted-foreground pt-2 border-t">
+                Verified on: {new Date(selectedEntry.updated_at).toLocaleDateString()}
               </div>
             </div>
           )}
