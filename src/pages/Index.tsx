@@ -125,11 +125,6 @@ const Index = () => {
 
       {/* Hero Section */}
       <header className="container mx-auto px-4 pt-12 pb-6">
-<style>
-  ::placeholder {
-    color: blue;
-  }
-</style>
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Main Hero Content */}
           <div className="flex-1 text-center lg:text-left space-y-8">
