@@ -126,7 +126,6 @@ const Index = () => {
       {/* Hero Section */}
       <header className="container mx-auto px-4 pt-12 pb-6">
 <style>
-  /* Styling the placeholder text to be blue across browsers */
   ::placeholder {
     color: blue;
   }
