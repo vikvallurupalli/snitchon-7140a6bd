@@ -133,7 +133,7 @@ const Index = () => {
             </div>
             
             <div className="space-y-4 animate-slide-up">
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tight">
+              <h2 className="text-3xl md:text-3xl font-bold tracking-tight">
                 SnitchOn
               </h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
