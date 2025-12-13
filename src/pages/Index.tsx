@@ -129,9 +129,9 @@ const Index = () => {
           {/* Main Hero Content */}
           <div className="flex-1 text-center lg:text-left space-y-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-elevated animate-fade-in">
-              <Shield className="w-7 h-7 text-primary-foreground" />
+              <Shield className="w-7 h-7 text-primary-foreground" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <h2 className="text-3xl md:text-3xl font-bold tracking-tight">
-                SnitchOn
+                Snitch
               </h2>
             </div>
             
