@@ -126,32 +126,10 @@ const Index = () => {
       {/* Hero Section */}
       <header className="container mx-auto px-4 pt-12 pb-6">
 <style>
-  /* General input style for visibility */
-  input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    width: 300px;
-  }
-
   /* Styling the placeholder text to be blue across browsers */
   ::placeholder {
     color: blue;
     opacity: 1; /* Ensures full color visibility in Firefox */
-  }
-  ::-webkit-input-placeholder {
-    color: blue;
-  }
-  :-moz-placeholder {
-    color: blue;
-    opacity: 1;
-  }
-  ::-moz-placeholder {
-    color: blue;
-    opacity: 1;
-  }
-  :-ms-input-placeholder {
-    color: blue;
   }
 </style>
         <div className="flex flex-col lg:flex-row gap-8 items-start">
