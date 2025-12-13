@@ -129,7 +129,6 @@ const Index = () => {
   /* Styling the placeholder text to be blue across browsers */
   ::placeholder {
     color: blue;
-    opacity: 1; /* Ensures full color visibility in Firefox */
   }
 </style>
         <div className="flex flex-col lg:flex-row gap-8 items-start">
