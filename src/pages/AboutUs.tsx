@@ -47,7 +47,8 @@ const AboutUs = () => {
               yet powerful: empower everyday people to become fact-checkers, truth-seekers, and defenders of 
               accurate information.
             </p> 
-            <p>Venkat V</p>
+            <p>Vikram RV</p>
+            <p>Venkat (Mentor)</p>
           </CardContent>
         </Card>
 
