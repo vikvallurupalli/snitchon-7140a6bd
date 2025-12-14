@@ -48,7 +48,7 @@ const AboutUs = () => {
               accurate information.
             </p> 
             <p>Vikram RV</p>
-            <p>Venkat (Mentor)</p>
+            <p>Venkat (Advisor)</p>
           </CardContent>
         </Card>
 
