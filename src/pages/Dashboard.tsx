@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, User, Home } from "lucide-react";
+import { Plus, Search, LogOut, Shield, Pencil, Trash2, ExternalLink, User, Home, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { EntryDialog } from "@/components/EntryDialog";
 import { AliasDialog } from "@/components/AliasDialog";
@@ -39,6 +39,9 @@ interface Entry {
   updated_at: string;
 }
 
+// Configurable rows per page
+const ROWS_PER_PAGE = 2;
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -52,6 +55,13 @@ const Dashboard = () => {
   const [aliasDialogOpen, setAliasDialogOpen] = useState(false);
   const [aliasRequired, setAliasRequired] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate pagination values
+  const totalPages = Math.ceil(filteredEntries.length / ROWS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ROWS_PER_PAGE;
+  const endIndex = startIndex + ROWS_PER_PAGE;
+  const paginatedEntries = filteredEntries.slice(startIndex, endIndex);
 
   useEffect(() => {
     checkAuth();
@@ -60,6 +70,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     filterEntries();
+    setCurrentPage(1); // Reset to first page when filter changes
   }, [searchQuery, entries]);
 
   const checkAuth = async () => {
@@ -294,7 +305,7 @@ const Dashboard = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredEntries.map((entry) => (
+                {paginatedEntries.map((entry) => (
                   <TableRow key={entry.id}>
                     <TableCell className="font-medium">{entry.topic_or_person}</TableCell>
                     <TableCell className="max-w-xs truncate">{entry.short_description}</TableCell>
@@ -349,11 +360,42 @@ const Dashboard = () => {
                         </div>
                       )}
                     </TableCell>
-
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between px-4 py-3 border-t">
+                <p className="text-sm text-muted-foreground">
+                  Showing {startIndex + 1}-{Math.min(endIndex, filteredEntries.length)} of {filteredEntries.length} entries
+                </p>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    Previous
+                  </Button>
+                  <span className="text-sm text-muted-foreground px-2">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
